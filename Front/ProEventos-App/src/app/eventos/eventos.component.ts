@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-eventos',
@@ -8,26 +9,18 @@ import { CommonModule } from '@angular/common';
   styleUrl: './eventos.component.scss',
 })
 export class EventosComponent {
-  public eventos: any = [
-    {
-      Tema: 'Angular Js',
-      Local: 'Ubatuba',
-    },
-    {
-      Tema: 'Flutter',
-      Local: 'Ilhabela',
-    },
-    {
-      Tema: '.Net',
-      Local: 'São Sebastião',
-    },
-    {
-      Tema: 'React',
-      Local: 'Tabubaté',
-    },
-    {
-      Tema: 'Angular 18',
-      Local: 'Caragua',
-    },
-  ];
+  public eventos: any;
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.getEventos();
+  }
+
+  public getEventos(): void {
+    this.http.get('https://localhost:4002/api/eventos').subscribe({
+      next: (value) => (this.eventos = value),
+      error: (err) => console.log(err),
+    });
+  }
 }
