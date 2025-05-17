@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ProEventos.API.Data;
 using ProEventos.API.Models;
 
 namespace ProEventos.API.Controllers
@@ -12,42 +13,22 @@ namespace ProEventos.API.Controllers
     [Route("api/[controller]")]
     public class EventoController : ControllerBase
     {
-        private IEnumerable<Evento> _eventos = new Evento[] {
-            new Evento()
-            {
-                Id = Guid.Parse("d08c7045-6af6-415a-b53e-5f26cf03ee96"),
-                Tema = "Evento Inicial",
-                Data = DateTime.Now.AddDays(13),
-                Local = "Ubatuba",
-                Lote = "XTR88847",
-                QtdPessoas = 400,
-                ImageURL = "../images/evento_capa_ubatuba.png"
-            },
-            new Evento()
-            {
-                Id = Guid.Parse("9d62a99c-195b-41e6-84bc-b3024b1a396d"),
-                Tema = "Evento C#",
-                Data = DateTime.Now.AddDays(10),
-                Local = "Caraguatatuba",
-                Lote = "XTR907989789",
-                QtdPessoas = 800,
-                ImageURL = "../images/evento_capa_caragua.png"
-            }
-        };
-        public EventoController()
+        private readonly DataContext _context;
+        public EventoController(DataContext context)
         {
+            _context = context;
         }
 
         [HttpGet]
         public IEnumerable<Evento> Get()
         {
-            return _eventos;
+            return _context.Eventos;
         }
 
         [HttpGet("{id}")]
         public IEnumerable<Evento> Get(Guid id)
         {
-            return _eventos.Where(evento => evento.Id == id);
+            return _context.Eventos.Where(evento => evento.Id == id);
         }        
 
         [HttpPost]
