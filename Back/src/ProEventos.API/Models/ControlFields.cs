@@ -9,11 +9,11 @@ namespace ProEventos.API.Models
 {
     public class ControlFields
     {
-        public Guid UsuarioCriacao { get; set; }
+        public int UsuarioCriacao { get; set; }
         public DateTime DataCriacao { get; set; }
-        public Guid? UsuarioEdicao { get; set; }
+        public int? UsuarioEdicao { get; set; }
         public DateTime? DataEdicao { get; set; }
-        public Guid? UsuarioDelecao { get; set; }
+        public int? UsuarioDelecao { get; set; }
         public DateTime? DataDelecao { get; set; }
         public bool Ativo { get; set; }
         

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProEventos.API.Data;
 
 namespace ProEventos.API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250518062818_AddRowVersionToEvento")]
+    partial class AddRowVersionToEvento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -18,9 +20,9 @@ namespace ProEventos.API.Data.Migrations
 
             modelBuilder.Entity("ProEventos.API.Models.Evento", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("INTEGER");
@@ -49,17 +51,22 @@ namespace ProEventos.API.Data.Migrations
                     b.Property<int>("QtdPessoas")
                         .HasColumnType("INTEGER");
 
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
                     b.Property<string>("Tema")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UsuarioCriacao")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("UsuarioCriacao")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int?>("UsuarioDelecao")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("UsuarioDelecao")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int?>("UsuarioEdicao")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("UsuarioEdicao")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

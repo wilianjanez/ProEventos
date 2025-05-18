@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using ProEventos.API.Data;
 using ProEventos.API.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ProEventos.API.Controllers
 {
@@ -22,11 +22,11 @@ namespace ProEventos.API.Controllers
         [HttpGet]
         public IEnumerable<Evento> Get()
         {
-            return _context.Eventos;
+            return _context.Eventos.Where(evento => evento.Ativo == true);
         }
 
         [HttpGet("{id}")]
-        public IEnumerable<Evento> Get(Guid id)
+        public IEnumerable<Evento> Get(int id)
         {
             return _context.Eventos.Where(evento => evento.Id == id);
         }        
@@ -41,12 +41,27 @@ namespace ProEventos.API.Controllers
         public string Put(int id)
         {
             return $"Exemplo de Put com {id}";
-        }     
+        }
 
         [HttpDelete("{id}")]
-        public string Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return $"Exemplo de Delete com {id}";
-        }                    
+            try
+            {
+            var evento = await _context.Eventos.FirstOrDefaultAsync(e => e.Id == id);
+
+            if (evento == null)
+                return NotFound($"Evento não encontrado ({id})");
+
+            evento.Ativo = false;
+            await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return Conflict("O evento foi alterado ou removido por outro processo.");
+            }
+
+            return Ok($"Evento deletado ({id})");
+        }           
     }
 }

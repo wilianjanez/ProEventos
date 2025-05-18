@@ -23,4 +23,11 @@ export class EventosComponent {
       error: (err) => console.log(err),
     });
   }
+
+  public deleteEvento(id: string): void {
+    this.http.delete(`https://localhost:4002/api/eventos/${id}`).subscribe({
+      next: (value) => (this.eventos = value),
+      error: (err) => console.log(err),
+    });
+  }
 }
