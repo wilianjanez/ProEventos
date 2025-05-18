@@ -8,5 +8,5 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
   imports: [CollapseModule],
 })
 export class NavComponent {
-  isCollapsed = false;
+  isCollapsed = true;
 }
