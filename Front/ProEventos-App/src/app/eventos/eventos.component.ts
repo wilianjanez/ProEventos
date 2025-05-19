@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './eventos.component.scss',
 })
 export class EventosComponent {
-  public eventos: any;
+  public eventos: any = [];
 
   constructor(private http: HttpClient) {}
 
