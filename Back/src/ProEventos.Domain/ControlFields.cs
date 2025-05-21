@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.ResponseCompression;
 
-namespace ProEventos.API.Models
+namespace ProEventos.Domain
 {
     public class ControlFields
     {
