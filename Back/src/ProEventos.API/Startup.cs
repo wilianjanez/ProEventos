@@ -32,8 +32,6 @@ namespace ProEventos.API
                 context => context.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
             );
 
-            //services.AddDbContext<DataContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));            
-
             services.AddControllers();
             services.AddCors();
             services.AddSwaggerGen(c =>
