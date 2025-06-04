@@ -320,4 +320,8 @@ namespace ProEventos.Persistence.Migrations
 #pragma warning restore 612, 618
         }
     }
+
+    internal class ProEventoContext
+    {
+    }
 }
