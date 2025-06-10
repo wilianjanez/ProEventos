@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { EventoService } from '../../services/evento.service';
+import { Evento } from '../models/Evento';
 @Component({
   selector: 'app-eventos',
   imports: [CommonModule, FormsModule, CollapseModule],
@@ -10,11 +11,13 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
   styleUrl: './eventos.component.scss',
 })
 export class EventosComponent {
-  public eventos: any = [];
-  public eventosFiltrados: any = [];
+  public eventos: Evento[] = [];
+  public eventosFiltrados: Evento[] = [];
+
   larguraImagem: number = 200;
   margemImagem: number = 2;
   mostrarImagem: boolean = false;
+
   private _filtroLista: string = '';
 
   public get filtroLista() {
@@ -28,7 +31,7 @@ export class EventosComponent {
       : this.eventos;
   }
 
-  filtrarEventos(filtrarPor: string): any {
+  filtrarEventos(filtrarPor: string): Evento[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.eventos.filter(
       (evento: any) =>
@@ -37,14 +40,14 @@ export class EventosComponent {
     );
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private eventoService: EventoService) {}
 
   ngOnInit(): void {
     this.getEventos();
   }
 
   public getEventos(): void {
-    this.http.get('https://localhost:4002/api/eventos').subscribe({
+    this.eventoService.getEventos().subscribe({
       next: (value) => (
         (this.eventos = value), (this.eventosFiltrados = value)
       ),
@@ -53,8 +56,8 @@ export class EventosComponent {
   }
 
   public deleteEvento(id: string): void {
-    this.http.delete(`https://localhost:4002/api/eventos/${id}`).subscribe({
-      next: (value) => (this.eventos = value),
+    this.eventoService.deleteEvento(id).subscribe({
+      next: (value) => (this.eventos = value as Evento[]),
       error: (err) => console.log(err),
     });
   }
