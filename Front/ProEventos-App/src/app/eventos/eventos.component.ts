@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { EventoService } from '../../services/evento.service';
 import { Evento } from '../models/Evento';
+import { DateTimeFormatPipe } from '../helpers/DateTimeFormat.pipe'; //
 @Component({
   selector: 'app-eventos',
-  imports: [CommonModule, FormsModule, CollapseModule],
+  imports: [CommonModule, FormsModule, CollapseModule, DateTimeFormatPipe],
   templateUrl: './eventos.component.html',
   styleUrl: './eventos.component.scss',
 })
@@ -14,11 +15,11 @@ export class EventosComponent {
   public eventos: Evento[] = [];
   public eventosFiltrados: Evento[] = [];
 
-  larguraImagem: number = 200;
-  margemImagem: number = 2;
-  mostrarImagem: boolean = false;
+  public larguraImagem = 200;
+  public margemImagem = 2;
+  public mostrarImagem = false;
 
-  private _filtroLista: string = '';
+  private _filtroLista = '';
 
   public get filtroLista() {
     return this._filtroLista;
@@ -55,7 +56,7 @@ export class EventosComponent {
     });
   }
 
-  public deleteEvento(id: string): void {
+  public deleteEvento(id: number): void {
     this.eventoService.deleteEvento(id).subscribe({
       next: (value) => (this.eventos = value as Evento[]),
       error: (err) => console.log(err),

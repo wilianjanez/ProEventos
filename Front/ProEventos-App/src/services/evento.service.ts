@@ -23,7 +23,7 @@ export class EventoService {
     return this.http.get<Evento>(`${this.baseUrl}/${id}`);
   }
 
-  deleteEvento(id: string) {
+  deleteEvento(id: number) {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
 }

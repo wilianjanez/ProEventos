@@ -23,6 +23,9 @@
               class="btn btn-outline-light btn-sm"
               (click)="alterarImagem()"
             >
+              <i
+                class="{{ !mostrarImagem ? 'fa fa-eye' : 'fa fa-eye-slash' }}"
+              ></i>
               {{ mostrarImagem ? "Ocultar" : "Mostrar" }}
             </button>
           </th>
@@ -34,7 +37,7 @@
           <th class="text-center"></th>
         </tr>
       </thead>
-      <tbody *ngIf="eventos || eventos.length">
+      <tbody *ngIf="eventos && eventos.length">
         <tr *ngFor="let evento of eventosFiltrados">
           <td>{{ evento.id }}</td>
           <td style="text-align: center">
@@ -48,10 +51,10 @@
             />
           </td>
           <td>{{ evento.local }}</td>
-          <td>{{ evento.data | date : "dd/MM/yyyy hh:mm" }}</td>
+          <td>{{ evento.data | DateTimeFormat }}</td>
           <td>{{ evento.tema }}</td>
           <td>{{ evento.qtdPessoas }}</td>
-          <td>{{ evento.lote }}</td>
+          <td>{{ evento.lotes[0].nome }}</td>
           <td class="text-center">
             <i
               class="bi bi-pencil-square text-primary fs-5 me-3 cursor-pointer"
